@@ -63,18 +63,6 @@ void image::openFolder()
 
 void image::clickshowPic(QListWidgetItem *item)
 {
-	QString OpenFile, OpenFilePath;
-	QImage image;
-
-	QString strName = item->text();
 	
-	qDebug() << strName << endl;
-
-	if (strName.indexOf("jpg") >= 0 || strName.indexOf("png") >= 0)
-	{
-		///获取当前图片的绝对路径
-		QPixmap pic(currentDirPath + "/" + strName);
-		ui.label->setScaledContents(true);
-		ui.label->setPixmap(pic);
-	}
+	
 }
