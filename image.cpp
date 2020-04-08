@@ -16,7 +16,7 @@ void image::openImg()
 	QString OpenFile, OpenFilePath;
 	QImage image;
 
-	//´ò¿ªÎÄ¼ş¼ĞÖĞµÄÍ¼Æ¬ÎÄ¼ş
+	//æ‰“å¼€æ–‡ä»¶å¤¹ä¸­çš„å›¾ç‰‡æ–‡ä»¶
 	OpenFile = QFileDialog::getOpenFileName(this,
 		"Please choose an image file",
 		"",
@@ -26,17 +26,17 @@ void image::openImg()
 		if (image.load(OpenFile))
 		{
 			QPainter painter(&image);
-			//label×ÔÊÊÓ¦´°¿Ú´óĞ¡
+			//labelè‡ªé€‚åº”çª—å£å¤§å°
 			QImage resultImg = image.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 			ui.label->setPixmap(QPixmap::fromImage(resultImg));
 			ui.label->show();
 		}
 	}
 	qDebug() << OpenFile;
-	//ÏÔÊ¾ËùÊ¾Í¼Æ¬µÄÂ·¾¶
+	//æ˜¾ç¤ºæ‰€ç¤ºå›¾ç‰‡çš„è·¯å¾„
 	QFileInfo OpenFileInfo;
 	OpenFileInfo = QFileInfo(OpenFile);
-	OpenFilePath = OpenFileInfo.filePath();  //filePath£¨£©º¯Êı·µ»ØQStringÀàĞÍ
+	OpenFilePath = OpenFileInfo.filePath();  //filePathï¼ˆï¼‰å‡½æ•°è¿”å›QStringç±»å‹
 	ui.statusBar->showMessage(OpenFilePath);
 	
 }
@@ -53,7 +53,7 @@ void image::openFolder()
 	QFileInfoList list = dir.entryInfoList();
 
 
-	//Ñ­»·±éÀúÎÄ¼ş£¬²¢Ìí¼Óµ½listWidget
+	//å¾ªç¯éå†æ–‡ä»¶ï¼Œå¹¶æ·»åŠ åˆ°listWidget
 	for (int i = 0; i<list.length(); i++)
 	{
 		QString file = list.at(i).fileName();
@@ -63,6 +63,6 @@ void image::openFolder()
 
 void image::clickshowPic(QListWidgetItem *item)
 {
-	
+    cout<<"item is clicked"<<item<<endl;
 	
 }
