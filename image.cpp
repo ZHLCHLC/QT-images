@@ -74,7 +74,7 @@ void image::clickshowPic(QListWidgetItem *item)
 		if (image.load(OpenFile))
 		{
 			QPainter painter(&image);
-			//label自适应窗口大小
+			
 			QImage resultImg = image.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 			ui.label->setPixmap(QPixmap::fromImage(resultImg));
 			ui.label->show();
