@@ -9,6 +9,8 @@ image::image(QWidget *parent)
 	connect(ui.pushButton_openimage, SIGNAL(clicked()), this, SLOT(openImg()));
 	connect(ui.pushButton_openfolder, SIGNAL(clicked()), this, SLOT(openFolder()));
 	connect(ui.listWidget_dirs, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(clickshowPic(QListWidgetItem *)));
+
+
 }
 
 void image::openImg()
@@ -38,7 +40,7 @@ void image::openImg()
 	OpenFileInfo = QFileInfo(OpenFile);
 	OpenFilePath = OpenFileInfo.filePath();  //filePath（）函数返回QString类型
 	ui.statusBar->showMessage(OpenFilePath);
-	
+
 }
 
 void image::openFolder()
@@ -47,34 +49,35 @@ void image::openFolder()
 	ui.listWidget_dirs->clear();
 	QString path = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("view file"), QDir::currentPath()));
 	qDebug() << path;
-	
+
 	QDir dir(path);
 	dir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Dirs);
 	QFileInfoList list = dir.entryInfoList();
 
 
 	//循环遍历文件，并添加到listWidget
-	for (int i = 0; i<list.length(); i++)
+	for (int i = 0; i < list.length(); i++)
 	{
-		QString file = list.at(i).fileName();
+		QString file = path + "\\"+list.at(i).fileName() ;
 		ui.listWidget_dirs->addItem(file);
 	}
 }
 
 void image::clickshowPic(QListWidgetItem *item)
 {
-	QString OpenFile, OpenFilePath;
-	QImage image;
 
 	QString strName = item->text();
-	
-	qDebug() << strName << endl;
-
-	if (strName.indexOf("jpg") >= 0 || strName.indexOf("png") >= 0)
+	QString OpenFile = strName;
+	QImage image;
+	if (OpenFile != "")
 	{
-		///获取当前图片的绝对路径
-		QPixmap pic(currentDirPath + "/" + strName);
-		ui.label->setScaledContents(true);
-		ui.label->setPixmap(pic);
+		if (image.load(OpenFile))
+		{
+			QPainter painter(&image);
+			//label自适应窗口大小
+			QImage resultImg = image.scaled(ui.label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+			ui.label->setPixmap(QPixmap::fromImage(resultImg));
+			ui.label->show();
+		}
 	}
 }
